@@ -7,7 +7,6 @@
 //the expected output would be [120, 60, 40, 30, 24]. 
 //If our input was [3, 2, 1], the expected output would be [2, 3, 6].
 
-
 //old solution which works in O(N^2)
     var nums = [1,2,3,4,5];
     var newNums = [];
@@ -24,8 +23,8 @@
 
     console.log(newNums);
 
- //new solution
- //works in O(n) time
+//new solution
+//works in O(n) time
 newNums = [];
  var product = 1;
 

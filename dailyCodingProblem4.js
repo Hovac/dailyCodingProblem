@@ -6,7 +6,7 @@
 //For example, the input [3, 4, -1, 1] should give 2. The input [1, 2, 0] should give 3.
 
 //For loop is linear and if has only one statement that is O(1) in complexity, so overall time complexity should be O(N)
-var numbers = [-1,-2,-3];
+var numbers = [1,-1,-2,-3];
 var target = numbers[0];
 
 for (i=1; i<numbers.length; i++) {
