@@ -8,7 +8,8 @@
 //If our input was [3, 2, 1], the expected output would be [2, 3, 6].
 
 
-    var nums = [5,4,3,2,1];
+//old solution which works in O(N^2)
+    var nums = [1,2,3,4,5];
     var newNums = [];
     var product;
 
@@ -21,6 +22,20 @@
         newNums.push(product);
     }
 
-    for (var i = 0; i< newNums.length; i++) {
-        console.log(newNums[i]);
-    }
+    console.log(newNums);
+
+ //new solution
+ //works in O(n) time
+newNums = [];
+ var product = 1;
+
+ for (i = 0; i<nums.length; i++) {
+     product *= nums[i];
+ }
+
+ for (i = 0; i<nums.length; i++) {
+     var newProduct = product/nums[i];
+     newNums.push(newProduct);
+ }
+
+ console.log(newNums);
