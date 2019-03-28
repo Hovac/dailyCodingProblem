@@ -4,6 +4,8 @@
 var dotStart = document.getElementById('dotStart');
 var dotStop = document.getElementById('dotStop');
 var dotOut = document.getElementById('dotResult');
+var speedSlider = document.getElementById('speedSlider');
+var speed = speedSlider.value;
 var w;
 var h;
 var flag = false;
@@ -12,11 +14,13 @@ var cOut = 0;
 var r;
 var result = 1.0;
 
+var closePi = 0;
+
 function setup() {
     w = windowWidth;
     h = windowHeight;
     createCanvas(w, h);
-    r = h / (2 * 1.5);
+    r = w / 4;
     reset();
 }
 
@@ -27,7 +31,10 @@ function reset() {
     ellipse(w / 2, h / 2, 2 * r + 5);
     cIn = 0;
     cOut = 0;
-    dotOut.innerHTML = 0;
+    dotOut.innerHTML = " ";
+    closeDiff = 0;
+    closePi = 0;
+    diff = 0;
 }
 
 function mouseWheel() {
@@ -37,29 +44,43 @@ function mouseWheel() {
 
 function draw() {
     if (flag) {
-        let tx = random(0, w);
-        let ty = random(0, h);
-        var d = dist(w / 2, h / 2, tx, ty);
-        if (d < r + 2.5) {
-            fill('rgba(237,85,59,1)')
-            cIn++;
+        for (let i = 0; i < speed; i++) {
+            let tx = random(0, w);
+            let ty = random(0, h);
+            let d = dist(w / 2, h / 2, tx, ty);
+            if (d < r + 1.5) {
+                fill('rgba(237,85,59,1)')
+                if (d < r) cIn++;
+            }
+            else if (d > r + 1.5) {
+                fill('rgba(223,231,36,0.7)')
+                if (d > r) cOut++;
+            }
+            ellipse(tx, ty, 2);
+
+            if (cIn > 0 && cOut > 0) {
+                result = (4 * h * cIn) / (r * (cOut+cIn));
+            }
+            let closeDiff = Math.abs(Math.PI - closePi);
+            let diff = Math.abs(Math.PI - result)
+            if (diff < closeDiff) {
+                closeDiff = diff;
+                closePi = result;
+            }
+            dotOut.innerHTML = result + "<br />" + closePi;
+
         }
-        else if (d > r + 2.5) {
-            fill('rgba(223,231,36,0.7)')
-            cOut++;
-        }
-        ellipse(tx, ty, 5);
-    }
-    if (cIn > 0 && cOut > 0) {
-        result = (cIn / (cIn + cOut)) * 9 * (w / h);
-        result = Number.parseFloat(result).toFixed(6);
-        dotOut.innerHTML = result;
     }
 }
 
-function startDots() {
+dotStart.addEventListener('click', function () {
     flag = true;
-}
-function stopDots() {
+});
+
+dotStop.addEventListener('click', function () {
     flag = false;
-}
+});
+
+speedSlider.addEventListener('input', function () {
+    speed = speedSlider.value;
+});
