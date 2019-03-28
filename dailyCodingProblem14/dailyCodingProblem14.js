@@ -12,6 +12,7 @@ var flag = false;
 var cIn = 0;
 var cOut = 0;
 var r;
+var usingHeight = false;
 var result = 1.0;
 
 var closePi = 0;
@@ -21,6 +22,10 @@ function setup() {
     h = windowHeight;
     createCanvas(w, h);
     r = w / 4;
+    if (2*r > h) {
+        r = h/3;
+        usingHeight = true;
+    }
     reset();
 }
 
@@ -59,7 +64,12 @@ function draw() {
             ellipse(tx, ty, 2);
 
             if (cIn > 0 && cOut > 0) {
-                result = (4 * h * cIn) / (r * (cOut+cIn));
+                if(usingHeight) {
+                    result = (3*w*cIn) / (r * (cOut+cIn));
+                }
+                else {
+                    result = (4 * h * cIn) / (r * (cOut+cIn));
+                }
             }
             let closeDiff = Math.abs(Math.PI - closePi);
             let diff = Math.abs(Math.PI - result)
